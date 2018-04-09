@@ -41,6 +41,7 @@ $(OBJFILES):
 	@$(ECHO) Compiling $(notdir $<)
 	@$(ECHO) '$(OBJ_CMD)' > $@.cmdline
 	@$(OBJ_CMD) 2> $@.log
+	@[ -s $@.log ] || $(RM) $@.log
 
 TARGET_CMD = $(LD) -o $@ $(LDFLAGS) $^ $(LDLIBS)
 $(addprefix $(BUILDDIR)/,$(TARGET)):
@@ -48,6 +49,7 @@ $(addprefix $(BUILDDIR)/,$(TARGET)):
 	@$(ECHO) Linking $(notdir $@)
 	@$(ECHO) '$(TARGET_CMD)' > $@.cmdline
 	@$(TARGET_CMD) 2> $@.log
+	@[ -s $@.log ] || $(RM) $@.log
 
 clean:
 	@$(RM) $(BUILDDIR) $(TARGET)
