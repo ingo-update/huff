@@ -44,8 +44,8 @@ $(OBJFILES):
 
 TARGET_CMD = $(LD) -o $@ $(LDFLAGS) $^ $(LDLIBS)
 $(addprefix $(BUILDDIR)/,$(TARGET)):
-	@$(ECHO) Linking $(notdir $@)
 	@$(MKDIR) $(dir $@)
+	@$(ECHO) Linking $(notdir $@)
 	@$(ECHO) '$(TARGET_CMD)' > $@.cmdline
 	@$(TARGET_CMD) 2> $@.log
 
@@ -62,15 +62,7 @@ test: $(TARGET)
 	@./unpak $(TESTFILE).pak
 	@$(DIFF) Makefile $(TESTFILE)
 
-debug:
-	@$(ECHO) $(notdir $(OBJFILES))
-	@$(ECHO) $(notdir $(PAK_OBJS))
-	@$(ECHO) $(notdir $(UNPAK_OBJS))
-	@$(ECHO) $(SRC)
-
-
 ## Dependencies
-
 $(BUILDDIR)/pak: $(PAK_OBJS)
 $(BUILDDIR)/unpak: $(UNPAK_OBJS)
 
