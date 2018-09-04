@@ -35,14 +35,13 @@ OBJDIR = $(BUILDDIR)/objs
 
 ## Object files
 OBJFILES = $(sort $(patsubst $(SRC)/%.c,$(OBJDIR)/%.o,$(wildcard $(SRC)/*.c)))
+PAK_OBJS = $(filter-out %/unpak.o %/decode.o,$(OBJFILES))
+UNPAK_OBJS = $(filter-out %/pak.o %/encode.o,$(OBJFILES))
 
 ## Default target(s)
 TARGET = pak unpak
 
 TESTFILE = $(BUILDDIR)/test/testfile
-
-PAK_OBJS = $(filter-out %/unpak.o %/decode.o,$(OBJFILES))
-UNPAK_OBJS = $(filter-out %/pak.o %/encode.o,$(OBJFILES))
 
 ### Rules
 
