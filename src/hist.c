@@ -1,9 +1,10 @@
 /* hist.c
- * Handle loading and storing of the histogram in the compressed file for 
+ * Handle loading and storing of the histogram in the compressed file for
  * the huffman compression programs.
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /* _write_int() - Write an int so that it can be read by _read_int()
  */
@@ -19,7 +20,7 @@ static void _write_int(FILE *s, int i)
 static int _read_int(FILE *s)
 {
   int i,c;
-  
+
   i = c = 0;
   while ('\n' != c)
     {
@@ -57,7 +58,7 @@ void hist_store(FILE *s, int *hist)
 
 void hist_load(FILE *s, int *hist)
 {
-  unsigned char c;
+  unsigned char c, pc;
   int f = 1;
 
   /* Clear histogram */
@@ -66,18 +67,27 @@ void hist_load(FILE *s, int *hist)
       hist[c] = 0;
     }
 
-  /* Read frequency data into histogram */ 
+  /* Read frequency data into histogram */
+  c = 0;
   while (0 != f)
     {
       /* Get character and frequency */
+      pc = c;
       c = fgetc(s);
+
       f = _read_int(s);
 
       /* Check for stop mark */
       if (0 != f)
 	{
-	  hist[c] = f;
-	}      
+	  if ((c <= pc) && (c != 0))
+	    {
+	      fprintf(stderr, "hist_load(): Error in histogram, %d (%c) not allowed after %d (%c).\n", c, c, pc, pc);
+	      exit(EXIT_FAILURE);
+	    }
+
+     	  hist[c] = f;
+	}
     }
 
   return;
