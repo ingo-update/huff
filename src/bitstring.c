@@ -7,7 +7,7 @@
 
 #include "bitstring.h"
 
-/* bitstring_empty() 
+/* bitstring_empty()
  * Create an empty bitstring.
  */
 
@@ -46,7 +46,7 @@ bitstring bitstring_add(bitstring bs, int bit)
   if (sizeof(long long) * 8 == bs->length)
     {
       fprintf(stderr,"bitstring_add() - bitstring too long.\n");
-      exit(-1);
+      exit(EXIT_FAILURE);
     }
 
   new = bitstring_empty();
