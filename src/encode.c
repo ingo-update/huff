@@ -25,8 +25,8 @@ void encode(FILE *infile, FILE *outfile, int *hist)
   bs = (bitstring *) malloc(sizeof(bitstring *) * 256);
   if (NULL == bs)
     {
-      fprintf(stderr,"main() - Couldn't allocate the bitstring array.\n");
-      exit(-1);
+      fprintf(stderr,"encode() - Couldn't allocate the bitstring array.\n");
+      exit(EXIT_FAILURE);
     }
 
   /* Build bitstring array from the tree. */
@@ -43,13 +43,13 @@ void encode(FILE *infile, FILE *outfile, int *hist)
 	  /* Select bitstring. */
 	  b = bs[inc];
 	  inp = b->length-1;
-	
+
 	  /* Output all bits in the bitstring. */
 	  while (0 <= inp)
 	    {
 	      bit = bitstring_bit(b, inp);
 	      outc = (outc | (bit << outp));
-	      --outp; --inp;
+	      --outp ; --inp;
 
 	      /* Send full bytes to output file. */
 	      if (0 > outp)

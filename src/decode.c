@@ -23,7 +23,7 @@ void decode(FILE *infile, FILE *outfile, int *hist)
   t = hufftree_build(hist);
 
   /* Output as many characters as the original file. */
-  i = 0; tp = t;
+  i = 0 ; tp = t;
   while (i < len)
     {
       /* Read a new byte. */
@@ -49,7 +49,7 @@ void decode(FILE *infile, FILE *outfile, int *hist)
 	      /* Done yet? */
 	      if (i == len)
 		{
-		  j = -1; /* This breaks the for loop. */
+		  break; /* out of the for loop */
 		}
 	    }
 	}
