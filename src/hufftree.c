@@ -1,9 +1,9 @@
 /* hufftree.c
  * Huffman compression tree for the huffman compression programs.
  *
- * A Huffman tree is either a leaf containing a character and the weight of 
- * it (i.e the frequency at which it appears in the input file) or a node 
- * containing two subtrees and the combined weight of them.
+ * A Huffman tree is either a leaf containing a character and the
+ * weight of it (the number of times it appears in the input file) or
+ * a node containing two subtrees and the combined weight of them.
  */
 
 #include <stdlib.h>
@@ -16,7 +16,7 @@
 /* hufftree_leaf()
  * Create a huffman tree leaf.
  */
- 
+
 hufftree hufftree_leaf(unsigned char c, int weight)
 {
   hufftree new;
@@ -25,7 +25,7 @@ hufftree hufftree_leaf(unsigned char c, int weight)
   if (NULL == new)
     {
       fprintf(stderr,"hufftree_leaf() - Couldn't allocate leaf.\n");
-      exit(-1);
+      exit(EXIT_FAILURE);
     }
 
   new->left = new->right = NULL;
@@ -47,9 +47,9 @@ hufftree hufftree_link(hufftree l, hufftree r)
   if (NULL == new)
     {
       fprintf(stderr,"hufftree_link() - Couldn't allocate node.\n");
-      exit(-1);
+      exit(EXIT_FAILURE);
     }
-  
+
   new->left = l;
   new->right = r;
   new->weight = (l->weight) + (r->weight);
@@ -94,12 +94,12 @@ unsigned char hufftree_char(hufftree t)
 }
 
 /* hufftree_build
- * build and return a huffman tree built from a character histogram.
+ * build and return a huffman tree from a character histogram.
  */
- 
+
 hufftree hufftree_build(int *hist)
 {
-  int i,size;
+  int i, size;
   heap a;
   hufftree *trees;
 
@@ -107,8 +107,8 @@ hufftree hufftree_build(int *hist)
   trees = (hufftree *) malloc(sizeof(hufftree *) * 256);
   if (NULL == trees)
     {
-      fprintf(stderr,"main() - Couldn't allocate the tree array.\n");
-      exit(-1);
+      fprintf(stderr,"hufftree_build() - Couldn't allocate the tree array.\n");
+      exit(EXIT_FAILURE);
     }
 
   /* Make hufftree leaves and put them into an array. */
@@ -125,7 +125,7 @@ hufftree hufftree_build(int *hist)
 
   /* Make a heap out of the array. */
   a = build_heap(trees, size);
-  
+
   /* Build the hufftree. */
   while (a->size > 1)
     {
