@@ -32,3 +32,7 @@ $(OBJDIR)/hist.o: $(SRC)/hist.c
 $(OBJDIR)/hufftree.o: $(SRC)/hufftree.c
 $(OBJDIR)/pak.o: $(SRC)/pak.c
 $(OBJDIR)/unpak.o: $(SRC)/unpak.c
+
+$(TESTDIR)/test-bitstring.o: $(TOPDIR)/test/test-bitstring.c  $(SRC)/bitstring.c  $(SRC)/bitstring.h
+
+$(TESTDIR)/test-bitstring: $(TESTDIR)/test-bitstring.o $(OBJDIR)/bitstring.o
