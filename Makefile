@@ -6,12 +6,15 @@ CFLAGS_heap.c = -DHEAP_ORDER="<"
 
 ## Test
 TESTFILE = $(BUILDDIR)/test/testfile
-test: $(TARGET)
+$(TESTFILE): $(SRCFILES)
 	@$(MKDIR) $(dir $(TESTFILE))
-	@$(CP) Makefile $(TESTFILE)
+	@$(CAT) $^ > $@
+
+test: $(TARGET) $(TESTFILE)
+	@$(CP) $(TESTFILE) $(TESTFILE).orig
 	@./pak $(TESTFILE)
 	@./unpak $(TESTFILE).pak
-	@$(DIFF) Makefile $(TESTFILE) && $(ECHO) SUCCESS
+	@$(DIFF) $(TESTFILE).orig $(TESTFILE) && $(ECHO) SUCCESS
 
 ### Dependencies
 
