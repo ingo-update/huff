@@ -12,7 +12,7 @@
 static void _exchange(hel *a, int x, int y)
 {
   hel t;
-  
+
   t = a[x];
   a[x] = a[y];
   a[y] = t;
@@ -38,7 +38,7 @@ static void _heapify(heap a, int i)
     {
       x = i;
     }
-  
+
   if ((r <= a->size) && (key(a->array[r]) < key(a->array[x])))
     {
       x = r;
@@ -81,7 +81,7 @@ heap build_heap(hel *a, int s)
 
 /* heap_sort() Sort an array using heapsort. Not used by the huffman
  * compression programs.
- *
+ */
 
 void heap_sort(hel *a, int s)
 {
@@ -89,17 +89,16 @@ void heap_sort(hel *a, int s)
   int i;
 
   h = build_heap(a, s);
-  
+
   for (i = s ; i > 1 ; --i)
     {
       _exchange(a,1,i);
       --(h->size);
       _heapify(h,1);
     }
-  
+
   free(h);
 }
-*/
 
 /* heap_size()
  * return the current size of a heap.

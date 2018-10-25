@@ -23,6 +23,7 @@ $(BUILDDIR)/pak: $(filter-out %/unpak.o %/decode.o,$(OBJFILES))
 $(BUILDDIR)/unpak: $(filter-out %/pak.o %/encode.o,$(OBJFILES))
 
 ## The first dependency for object files must be their source file
+#TODO: Add dependencies for included .h files
 $(OBJDIR)/bitstring.o: $(SRC)/bitstring.c
 $(OBJDIR)/decode.o: $(SRC)/decode.c
 $(OBJDIR)/encode.o: $(SRC)/encode.c

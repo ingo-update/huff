@@ -5,6 +5,7 @@
 
 /* Datatype */
 /* hel is the heap element datatype, key(x) is the key function */
+
 #define hel hufftree
 #define key(x) (x->weight)
 
@@ -27,8 +28,9 @@ struct heap_t
 heap build_heap(hel *a, int s);
 void heap_sort(hel *a, int s);
 
-void heap_insert(heap s, hel e);
-hel heap_extract(heap s);
+int heap_size(heap h);
+void heap_insert(heap h, hel e);
+hel heap_extract(heap h);
+
 
 #endif /* _HEAP_H_ */
-
