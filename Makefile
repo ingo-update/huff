@@ -7,7 +7,7 @@ CFLAGS_heap.c = -DHEAP_ORDER="<"
 ## Test
 TESTFILE = $(BUILDDIR)/test/testfile
 $(TESTFILE): $(SRCFILES)
-	@$(MKDIR) $(dir $(TESTFILE))
+	@$(MKDIR) $(dir $@)
 	@$(CAT) $^ > $@
 
 test: $(TARGET) $(TESTFILE)

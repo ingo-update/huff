@@ -1,14 +1,18 @@
-TOPDIR = $(shell pwd)
-SRC = $(TOPDIR)/src
-BUILDDIR = $(TOPDIR)/build
-OBJDIR = $(BUILDDIR)/objs
-OBJFILES = $(sort $(patsubst $(SRC)/%.c,$(OBJDIR)/%.o,$(wildcard $(SRC)/*.c)))
-
 ifdef SPEC
   include SPEC
 else
   include make/spec.gmk
 endif
+
+TOPDIR = $(shell pwd)
+SRC = $(TOPDIR)/src
+BUILDDIR = $(TOPDIR)/build
+OBJDIR = $(BUILDDIR)/objs
+TOOLSDIR = $(BUILDDIR)/tools
+GENSRC = $(BUILDDIR)/gensrc
+
+SRCFILES = $(sort Makefile $(wildcard make/*.gmk $(SRC)/*.h $(SRC)/*.c))
+OBJFILES = $(sort $(patsubst $(SRC)/%.c,$(OBJDIR)/%.o,$(wildcard $(SRC)/*.c)) $(EXTRA_OBJS))
 
 COMPILE_CMD = $(CC) -I$(SRC) $(CFLAGS) $(OPT_CFLAGS) $(DBG_CFLAGS) $(CFLAGS_$(notdir $<)) $< -o $@
 LINK_CMD = $(LD) -o $@ $(LDFLAGS) $^ $(LDLIBS)
@@ -38,5 +42,5 @@ clean:
 sweep: clean
 	@$(RM) $(SRC)/*~ *~
 
-paper:
-	$(PRINT) $(sort Makefile $(wildcard make/*.gmk $(SRC)/*.h $(SRC)/*.c))
+paper: $(SRCFILES)
+	$(PRINT) $^
