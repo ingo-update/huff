@@ -2,6 +2,8 @@ TARGET = pak unpak
 
 include make/build.gmk
 
+CFLAGS_heap.c = -DHEAP_ORDER="<"
+
 ## Test
 TESTFILE = $(BUILDDIR)/test/testfile
 test: $(TARGET)
