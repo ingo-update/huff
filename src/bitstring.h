@@ -17,6 +17,7 @@ bitstring bitstring_add(bitstring bs, int bit);
 
 /* Selectors. */
 int bitstring_bit(bitstring bs, int b);
+int bitstring_length(bitstring bs);
 
 /* Miscellaneous. */
 void bitstring_print(FILE *s, bitstring bs);

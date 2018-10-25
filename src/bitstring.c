@@ -43,10 +43,16 @@ bitstring bitstring_add(bitstring bs, int bit)
 {
   bitstring new;
 
+  if (NULL == bs)
+    {
+      fprintf(stderr,"bitstring_add() - bitstring uninitialized (NULL).\n");
+      return NULL;
+    }
+
   if (sizeof(long long) * 8 == bs->length)
     {
       fprintf(stderr,"bitstring_add() - bitstring too long.\n");
-      exit(EXIT_FAILURE);
+      return NULL;
     }
 
   new = bitstring_empty();
@@ -62,8 +68,34 @@ bitstring bitstring_add(bitstring bs, int bit)
 
 int bitstring_bit(bitstring bs, int b)
 {
-  return (bs->bits >> b) & 0x1;
+  if (NULL == bs)
+    {
+      fprintf(stderr,"bitstring_bit() - bitstring uninitialized (NULL).\n");
+      return 0;
+    }
+  else
+    {
+      return (bs->bits >> b) & 0x1;
+    }
 }
+
+/* bitstring_length()
+ * Return the length of a bitstring.
+ */
+
+int bitstring_length(bitstring bs)
+{
+  if (NULL == bs)
+    {
+      fprintf(stderr,"bitstring_length() - bitstring uninitialized (NULL).\n");
+      return 0;
+    }
+  else
+    {
+      return bs->length;
+    }
+}
+
 
 /* bitstring_print()
  * print the bits from a bitstring on a output stream.
