@@ -1,3 +1,5 @@
+#include "stdlib.h"
+
 #include "bitstring.h"
 
 int test_bitstrings()
@@ -42,15 +44,15 @@ int test_bitstrings()
       ++fail;
       fprintf(stderr, "FAIL: Bitstring with 10 bits should not have length %d.\n", bitstring_length(b));
     }
-  else if (1 !=bitstring_bit(b, 2))
+  else if (1 != bitstring_bit(b, 2))
     {
       ++fail;
-      fprintf(stderr, "FAIL: Bit 2 should not be a %d.\n", bitstring_bit(b, 2));
+      fprintf(stderr, "FAIL: Bit 2 should not be a %d, it should be 1.\n", bitstring_bit(b, 2));
     }
-  else if (0 !=bitstring_bit(b, 5))
+  else if (0 != bitstring_bit(b, 5))
     {
       ++fail;
-      fprintf(stderr, "FAIL: Bit 5 should not be a %d.\n", bitstring_bit(b, 5));
+      fprintf(stderr, "FAIL: Bit 5 should not be a %d, it should be 0.\n", bitstring_bit(b, 5));
     }
 
   b = bitstring_empty();
@@ -75,5 +77,13 @@ int main()
 
   fail += test_bitstrings();
 
-  return fail;
+  if (fail)
+    {
+      fprintf(stderr, "FAILURE: %d failures detected.\n", fail);
+      return EXIT_FAILURE;
+    }
+  else
+  {
+    return EXIT_SUCCESS;
+  }
 }
