@@ -19,7 +19,7 @@ bitstring bitstring_empty()
   if (NULL == new)
     {
       fprintf(stderr,"bitstring_empty() - Couldn't allocate bitstring.\n");
-      exit(-1);
+      return NULL;
     }
 
   new->bits = 0;
@@ -98,7 +98,7 @@ int bitstring_length(bitstring bs)
 
 
 /* bitstring_print()
- * print the bits from a bitstring on a output stream.
+ * Print the bits from a bitstring on a output stream.
  */
 
 void bitstring_print(FILE *s, bitstring bs)
