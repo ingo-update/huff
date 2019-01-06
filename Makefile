@@ -11,6 +11,7 @@ $(TESTFILE): $(SRCFILES)
 	@$(CAT) $^ > $@
 
 test: $(TARGET) $(TESTFILE)
+	@$(ECHO) Testing target $(TARGET)
 	@$(CP) $(TESTFILE) $(TESTFILE).orig
 	@./pak $(TESTFILE)
 	@./unpak $(TESTFILE).pak
@@ -23,16 +24,15 @@ $(BUILDDIR)/pak: $(filter-out %/unpak.o %/decode.o,$(OBJFILES))
 $(BUILDDIR)/unpak: $(filter-out %/pak.o %/encode.o,$(OBJFILES))
 
 ## The first dependency for object files must be their source file
-#TODO: Add dependencies for included .h files
-$(OBJDIR)/bitstring.o: $(SRC)/bitstring.c
-$(OBJDIR)/decode.o: $(SRC)/decode.c
-$(OBJDIR)/encode.o: $(SRC)/encode.c
-$(OBJDIR)/heap.o: $(SRC)/heap.c
-$(OBJDIR)/hist.o: $(SRC)/hist.c
-$(OBJDIR)/hufftree.o: $(SRC)/hufftree.c
-$(OBJDIR)/pak.o: $(SRC)/pak.c
-$(OBJDIR)/unpak.o: $(SRC)/unpak.c
+$(OBJDIR)/bitstring.o: $(SRC)/bitstring.c $(SRC)/bitstring.h
+$(OBJDIR)/decode.o: $(SRC)/decode.c $(SRC)/decode.h $(SRC)/hufftree.h
+$(OBJDIR)/encode.o: $(SRC)/encode.c $(SRC)/encode.h $(SRC)/hufftree.h $(SRC)/bitstring.h
+$(OBJDIR)/heap.o: $(SRC)/heap.c $(SRC)/heap.h
+$(OBJDIR)/hist.o: $(SRC)/hist.c $(SRC)/hist.h
+$(OBJDIR)/hufftree.o: $(SRC)/hufftree.c $(SRC)/hufftree.h $(SRC)/bitstring.h $(SRC)/heap.h
+$(OBJDIR)/pak.o: $(SRC)/pak.c $(SRC)/hist.h $(SRC)/encode.h
+$(OBJDIR)/unpak.o: $(SRC)/unpak.c $(SRC)/hist.h $(SRC)/decode.h
 
-$(TESTDIR)/test-bitstring.o: $(TOPDIR)/test/test-bitstring.c  $(SRC)/bitstring.c  $(SRC)/bitstring.h
+$(TESTDIR)/test-bitstring.o: $(TOPDIR)/test/test-bitstring.c $(SRC)/bitstring.c $(SRC)/bitstring.h
 
 $(TESTDIR)/test-bitstring: $(TESTDIR)/test-bitstring.o $(OBJDIR)/bitstring.o

@@ -5,9 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "encode.h"
 #include "hufftree.h"
-#include "heap.h"
 #include "bitstring.h"
 
 void encode(FILE *infile, FILE *outfile, int *hist)
