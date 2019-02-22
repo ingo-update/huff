@@ -25,29 +25,21 @@ static void _exchange(heap_element *a, int x, int y)
 
 static void _heapify(heap a, int i)
 {
-  int l,r,x;
+  int l, r, s, x;
 
   l = left(i);
   r = right(i);
+  s = a->size;
 
-  if ((l < a->size) && heap_order(a->array[l], a->array[i]))
-    {
-      x = l;
-    }
-  else
-    {
-      x = i;
-    }
+  /* Try to find exchange candidate */
+  x = ((l < s) && heap_order(a->array[l], a->array[i])) ? l : i;
+  x = ((r < s) && heap_order(a->array[r], a->array[x])) ? r : x;
 
-  if ((r < a->size) && heap_order(a->array[r], a->array[x]))
-    {
-      x = r;
-    }
-
+  /* Exchange and heapify subtree if candidate was found */
   if (x != i)
     {
-      _exchange(a->array,i,x);
-      _heapify(a,x);
+      _exchange(a->array, i, x);
+      _heapify(a, x);
     }
 
   return;
@@ -71,6 +63,8 @@ heap build_heap(heap_element *a, int s)
 
   new->array = a;
   new->size = s;
+
+  /* The last half ot the array are guaranteed to be leaf nodes */
   for (i = (s/2)-1 ; i >= 0 ; --i)
     {
       _heapify(new, i);
@@ -79,7 +73,7 @@ heap build_heap(heap_element *a, int s)
   return new;
 }
 
-/* heap_sort() Sort an array using heapsort. Not used by the huffman
+/* heap_sort() Sort an array using heap sort. Not used by the huffman
  * compression programs.
  */
 
@@ -88,15 +82,20 @@ void heap_sort(heap_element *a, int s)
   heap h;
   int i;
 
+  /* Build a heap of the array */
   h = build_heap(a, s);
 
-  for (i = s-1 ; i >= 0 ; --i)
+  for (i = s - 1 ; i >= 0 ; --i)
     {
+      /* Exchange the top element of the heap with the last one */
       _exchange(h->array, 0, i);
+
+      /* Decrease size and heapify */
       --h->size;
-      _heapify(h,0);
+      _heapify(h, 0);
     }
 
+  /* Throw away the heap wrapper */
   free(h);
 }
 
@@ -117,16 +116,19 @@ void heap_insert(heap a, heap_element e)
 {
   int i;
 
+  /* Start at the end of the array */
   i = a->size;
 
+  /* Pull elements down until we find the correct place to insert */
   while ((i > 0) && heap_order(e, a->array[parent(i)]))
     {
       a->array[i] = a->array[parent(i)];
       i = parent(i);
     }
 
-  ++a->size;
+  /* Insert and increase heap size */
   a->array[i] = e;
+  ++a->size;
 
   return;
 }
@@ -138,18 +140,20 @@ void heap_insert(heap a, heap_element e)
 
 heap_element heap_extract(heap a)
 {
-  heap_element max;
+  heap_element x;
 
   if (a->size < 1)
     {
       fprintf(stderr,"heap_extract() - Heap underflow.\n");
-      exit(-1);
+      exit(EXIT_FAILURE);
     }
 
-  max = a->array[0];
-  a->array[0] = a->array[a->size-1];
-  --a->size;
-  _heapify(a,0);
+  /* Remove first element and put the last one first, decreasing the size */
+  x = a->array[0];
+  a->array[0] = a->array[--a->size];
 
-  return max;
+  /* Restore heap property */
+  _heapify(a, 0);
+
+  return x;
 }
