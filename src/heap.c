@@ -7,6 +7,17 @@
 
 #include "heap.h"
 
+void _print_array(int *a, int s)
+{
+  int i;
+  for (i = 0 ; i < s ; ++i)
+    {
+      printf(" %d", a[i]);
+    }
+  printf("\n");
+}
+
+
 /* Exchange two elements in the heap array. */
 
 static void _exchange(hel *a, int x, int y)
@@ -30,7 +41,7 @@ static void _heapify(heap a, int i)
   l = left(i);
   r = right(i);
 
-  if ((l <= a->size) && (key(a->array[l]) HEAP_ORDER key(a->array[i])))
+  if ((l < a->size) && (key(a->array[l]) HEAP_ORDER key(a->array[i])))
     {
       x = l;
     }
@@ -39,7 +50,7 @@ static void _heapify(heap a, int i)
       x = i;
     }
 
-  if ((r <= a->size) && (key(a->array[r]) < key(a->array[x])))
+  if ((r < a->size) && (key(a->array[r]) HEAP_ORDER key(a->array[x])))
     {
       x = r;
     }
@@ -71,9 +82,9 @@ heap build_heap(hel *a, int s)
 
   new->array = a;
   new->size = s;
-  for (i = s/2 ; i > 0 ; --i)
+  for (i = (s/2)-1 ; i >= 0 ; --i)
     {
-      _heapify(new,i);
+      _heapify(new, i);
     }
 
   return new;
@@ -90,11 +101,11 @@ void heap_sort(hel *a, int s)
 
   h = build_heap(a, s);
 
-  for (i = s ; i > 1 ; --i)
+  for (i = s-1 ; i >= 0 ; --i)
     {
-      _exchange(a,1,i);
-      --(h->size);
-      _heapify(h,1);
+      _exchange(h->array, 0, i);
+      --h->size;
+      _heapify(h,0);
     }
 
   free(h);
@@ -104,7 +115,7 @@ void heap_sort(hel *a, int s)
  * return the current size of a heap.
  */
 
-int heap_size(heap  a)
+int heap_size(heap a)
 {
   return a->size;
 }
@@ -117,14 +128,15 @@ void heap_insert(heap a, hel e)
 {
   int i;
 
-  ++a->size;
   i = a->size;
-  while ((i > 1) && key(a->array[parent(i)]) > key(e))
+
+  while ((i > 0) && (key(e) HEAP_ORDER key(a->array[parent(i)])))
     {
       a->array[i] = a->array[parent(i)];
       i = parent(i);
     }
 
+  ++a->size;
   a->array[i] = e;
 
   return;
@@ -145,10 +157,10 @@ hel heap_extract(heap a)
       exit(-1);
     }
 
-  max = a->array[1];
-  a->array[1] = a->array[a->size];
+  max = a->array[0];
+  a->array[0] = a->array[a->size-1];
   --a->size;
-  _heapify(a,1);
+  _heapify(a,0);
 
   return max;
 }
