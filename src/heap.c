@@ -77,7 +77,7 @@ heap build_heap(hel *a, int s)
   if (NULL == new)
     {
       fprintf(stderr,"build_heap() - Couldn't allocate memory.\n");
-      exit(-1);
+      exit(EXIT_FAILURE);
     }
 
   new->array = a;

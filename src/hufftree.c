@@ -118,8 +118,8 @@ hufftree hufftree_build(int *hist)
       /* No zero-weight leaves! */
       if (0 < hist[i])
 	{
-	  ++size;
 	  trees[size] = hufftree_leaf((unsigned char) i, hist[i]);
+	  ++size;
 	}
     }
 
