@@ -1,11 +1,15 @@
 TARGET = pak unpak
 
+TESTOBJS = $(TESTDIR)/heap.o
+
 include make/build.gmk
 include make/test.gmk
 
-CFLAGS_heap.c = -DHEAP_ORDER="<"
+CFLAGS_heap.c = -DCUSTOM_HEAP_ELEMENT -DHEAP_ORDER="<"
+CFLAGS_hufftree.c = -DCUSTOM_HEAP_ELEMENT
 
 ## Test
+
 TESTFILE = $(BUILDDIR)/test/testfile
 $(TESTFILE): $(SRCFILES)
 	@$(MKDIR) $(dir $@)
@@ -36,6 +40,7 @@ $(OBJDIR)/unpak.o: $(SRC)/unpak.c $(SRC)/hist.h $(SRC)/decode.h
 
 $(TESTDIR)/test-bitstring.o: $(TOPDIR)/test/test-bitstring.c $(SRC)/bitstring.c $(SRC)/bitstring.h
 $(TESTDIR)/test-heap.o: $(TOPDIR)/test/test-heap.c $(SRC)/heap.c $(SRC)/heap.h
+$(TESTDIR)/heap.o: $(SRC)/heap.c $(SRC)/heap.h
 
 $(TESTDIR)/test-bitstring: $(TESTDIR)/test-bitstring.o $(OBJDIR)/bitstring.o
-$(TESTDIR)/test-heap: $(TESTDIR)/test-heap.o $(OBJDIR)/heap.o
+$(TESTDIR)/test-heap: $(TESTDIR)/test-heap.o $(TESTDIR)/heap.o
