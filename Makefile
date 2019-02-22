@@ -1,6 +1,7 @@
 TARGET = pak unpak
 
 include make/build.gmk
+include make/test.gmk
 
 CFLAGS_heap.c = -DHEAP_ORDER="<"
 
