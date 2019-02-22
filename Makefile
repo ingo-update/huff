@@ -34,5 +34,7 @@ $(OBJDIR)/pak.o: $(SRC)/pak.c $(SRC)/hist.h $(SRC)/encode.h
 $(OBJDIR)/unpak.o: $(SRC)/unpak.c $(SRC)/hist.h $(SRC)/decode.h
 
 $(TESTDIR)/test-bitstring.o: $(TOPDIR)/test/test-bitstring.c $(SRC)/bitstring.c $(SRC)/bitstring.h
+$(TESTDIR)/test-heap.o: $(TOPDIR)/test/test-heap.c $(SRC)/heap.c $(SRC)/heap.h
 
 $(TESTDIR)/test-bitstring: $(TESTDIR)/test-bitstring.o $(OBJDIR)/bitstring.o
+$(TESTDIR)/test-heap: $(TESTDIR)/test-heap.o $(OBJDIR)/heap.o
