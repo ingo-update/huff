@@ -24,6 +24,10 @@ int test_heap()
       ++ fail;
       fprintf(stderr, "Failure: test_heap(): heap_size is %d after 10 insertions.\n", heap_size(x));
     }
+  else
+    {
+      fprintf(stderr, "Success: test_heap1\n");
+    }
 
   /* Extract elements in correct order */
   p = heap_extract(x);
@@ -36,6 +40,10 @@ int test_heap()
 	  fprintf(stderr, "Failure: test_heap(): Out of order elements; %d should not be smaller than %d.\n", p, q);
 	}
       p = q;
+    }
+  if (0 == fail)
+    {
+      fprintf(stderr, "Success: test_heap2\n");
     }
 
   return fail;
@@ -63,13 +71,18 @@ int test_heapsort()
 
   if (fail)
     {
-      fprintf(stderr, "Failure: Array is not correctly sorted:");
-      for (i = 0 ; i < 10 ; ++i)
-	{
-	  fprintf(stderr, " %d", a[i]);
-	}
-      fprintf(stderr, "\n");
+      fprintf(stderr, "Failure: test_heapsort Array is not correctly sorted:");
     }
+  else
+    {
+      fprintf(stderr, "Success: test_heapsort");
+    }
+
+  for (i = 0 ; i < 10 ; ++i)
+    {
+      fprintf(stderr, " %d", a[i]);
+    }
+  fprintf(stderr, "\n");
 
   return fail;
 }
