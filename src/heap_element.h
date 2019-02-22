@@ -3,10 +3,7 @@
 
 #include "hufftree.h"
 
-/* Datatype */
-/* hel is the heap element datatype, key(x) is the key function */
-
-#define hel hufftree
-#define key(x) (x->weight)
+#define heap_element hufftree
+#define heap_order(x,y) ((x)->weight < (y)->weight)
 
 #endif /* _HEAP_ELEMENT_H_ */

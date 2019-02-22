@@ -4,13 +4,8 @@
 #ifdef CUSTOM_HEAP_ELEMENT
 #include "heap_element.h"
 #else
-#define hel int
-#define key(x) x
-#endif
-
-/* Sorting order; > is decreasing (default), < is increasing */
-#ifndef HEAP_ORDER
-#define HEAP_ORDER >
+#define heap_element int
+#define heap_order(x,y) ((x) > (y))
 #endif
 
 #define left(x) (2*x)+1
@@ -20,17 +15,15 @@
 typedef struct heap_t *heap;
 struct heap_t
 {
-  hel *array;
+  heap_element *array;
   int size;
 };
 
-heap build_heap(hel *a, int s);
-void heap_sort(hel *a, int s);
+heap build_heap(heap_element *a, int s);
+void heap_sort(heap_element *a, int s);
 
 int heap_size(heap h);
-void heap_insert(heap h, hel e);
-hel heap_extract(heap h);
-
-void _print_array(int *a, int s);
+void heap_insert(heap h, heap_element e);
+heap_element heap_extract(heap h);
 
 #endif /* _HEAP_H_ */

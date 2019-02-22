@@ -7,22 +7,11 @@
 
 #include "heap.h"
 
-void _print_array(int *a, int s)
-{
-  int i;
-  for (i = 0 ; i < s ; ++i)
-    {
-      printf(" %d", a[i]);
-    }
-  printf("\n");
-}
-
-
 /* Exchange two elements in the heap array. */
 
-static void _exchange(hel *a, int x, int y)
+static void _exchange(heap_element *a, int x, int y)
 {
-  hel t;
+  heap_element t;
 
   t = a[x];
   a[x] = a[y];
@@ -41,7 +30,7 @@ static void _heapify(heap a, int i)
   l = left(i);
   r = right(i);
 
-  if ((l < a->size) && (key(a->array[l]) HEAP_ORDER key(a->array[i])))
+  if ((l < a->size) && heap_order(a->array[l], a->array[i]))
     {
       x = l;
     }
@@ -50,7 +39,7 @@ static void _heapify(heap a, int i)
       x = i;
     }
 
-  if ((r < a->size) && (key(a->array[r]) HEAP_ORDER key(a->array[x])))
+  if ((r < a->size) && heap_order(a->array[r], a->array[x]))
     {
       x = r;
     }
@@ -68,7 +57,7 @@ static void _heapify(heap a, int i)
  * make an array into a heap.
  */
 
-heap build_heap(hel *a, int s)
+heap build_heap(heap_element *a, int s)
 {
   heap new;
   int i;
@@ -94,7 +83,7 @@ heap build_heap(hel *a, int s)
  * compression programs.
  */
 
-void heap_sort(hel *a, int s)
+void heap_sort(heap_element *a, int s)
 {
   heap h;
   int i;
@@ -124,13 +113,13 @@ int heap_size(heap a)
  * insert an element into a heap.
  */
 
-void heap_insert(heap a, hel e)
+void heap_insert(heap a, heap_element e)
 {
   int i;
 
   i = a->size;
 
-  while ((i > 0) && (key(e) HEAP_ORDER key(a->array[parent(i)])))
+  while ((i > 0) && heap_order(e, a->array[parent(i)]))
     {
       a->array[i] = a->array[parent(i)];
       i = parent(i);
@@ -147,9 +136,9 @@ void heap_insert(heap a, hel e)
  * remaining data.
  */
 
-hel heap_extract(heap a)
+heap_element heap_extract(heap a)
 {
-  hel max;
+  heap_element max;
 
   if (a->size < 1)
     {
