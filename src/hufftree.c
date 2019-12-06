@@ -127,10 +127,7 @@ hufftree hufftree_build(int *hist)
   a = build_heap(trees, size);
 
   /* Build the hufftree. */
-  while (a->size > 1)
-    {
-      heap_insert(a, hufftree_link(heap_extract(a), heap_extract(a)));
-    }
+  while (a->size > 1) heap_insert(a, hufftree_link(heap_extract(a), heap_extract(a)));
 
   return heap_extract(a);
 }
