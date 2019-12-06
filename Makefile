@@ -40,7 +40,9 @@ $(OBJDIR)/unpak.o: $(SRC)/unpak.c $(SRC)/hist.h $(SRC)/decode.h
 
 $(TESTDIR)/test-bitstring.o: $(TOPDIR)/test/test-bitstring.c $(SRC)/bitstring.c $(SRC)/bitstring.h
 $(TESTDIR)/test-heap.o: $(TOPDIR)/test/test-heap.c $(SRC)/heap.c $(SRC)/heap.h
+$(TESTDIR)/test-hufftree.o: $(TOPDIR)/test/test-hufftree.c $(SRC)/hufftree.c $(SRC)/hufftree.h
 $(TESTDIR)/heap.o: $(SRC)/heap.c $(SRC)/heap.h
 
 $(TESTDIR)/test-bitstring: $(TESTDIR)/test-bitstring.o $(OBJDIR)/bitstring.o
 $(TESTDIR)/test-heap: $(TESTDIR)/test-heap.o $(TESTDIR)/heap.o
+$(TESTDIR)/test-hufftree: $(TESTDIR)/test-hufftree.o $(OBJDIR)/hufftree.o $(OBJDIR)/bitstring.o $(TESTDIR)/heap.o

@@ -17,7 +17,7 @@ struct hufftree_t
 };
 
 /* Constructors. */
-hufftree hufftree_leaf(unsigned char c, int depth);
+hufftree hufftree_leaf(unsigned char c, int weight);
 hufftree hufftree_link(hufftree l, hufftree r);
 
 /* Selectors. */
