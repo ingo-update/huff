@@ -38,7 +38,7 @@ int test_datatype()
       fprintf(stderr, "FAILURE, no left branch of c\n");
       ++fail;
     }
-  if ('a' != hufftree_char(d))
+  else if ('a' != hufftree_char(d))
     {
       fprintf(stderr, "FAILURE, left branch is '%c', should be 'a'\n", hufftree_char(d));
       ++fail;
@@ -49,9 +49,15 @@ int test_datatype()
       fprintf(stderr, "FAILURE, no right branch of c\n");
       ++fail;
     }
-  if ('b' != hufftree_char(e))
+  else if ('b' != hufftree_char(e))
     {
       fprintf(stderr, "FAILURE, right branch is '%c', should be 'b'\n", hufftree_char(e));
+      ++fail;
+    }
+
+  if (c->weight != 42 + 17)
+    {
+      fprintf(stderr, "FAILURE, combined weight is %d, should be %d\n", c->weight, 42 + 17);
       ++fail;
     }
 

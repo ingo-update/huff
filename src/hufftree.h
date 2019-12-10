@@ -3,7 +3,7 @@
 
 #include "bitstring.h"
 
-/* Maxumum function. */
+/* Maximum function. */
 #define max(x,y) (x > y ? x : y)
 
 typedef struct hufftree_t *hufftree;
