@@ -1,9 +1,14 @@
 TARGET = pak unpak
 
+ifndef MAKEDIR
+  MAKEDIR = ../make
+endif
+
+SPEC = $(MAKEDIR)/spec.gmk
 TESTOBJS = $(TESTDIR)/heap.o
 
-include make/build.gmk
-include make/test.gmk
+include $(MAKEDIR)/build.gmk
+include $(MAKEDIR)/test.gmk
 
 CFLAGS_heap.c = -DCUSTOM_HEAP_ELEMENT -DHEAP_ORDER="<"
 CFLAGS_hufftree.c = -DCUSTOM_HEAP_ELEMENT
