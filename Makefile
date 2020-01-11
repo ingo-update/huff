@@ -10,7 +10,7 @@ TESTOBJS = $(TESTDIR)/heap.o
 include $(MAKEDIR)/build.gmk
 include $(MAKEDIR)/test.gmk
 
-CFLAGS_heap.c = -DCUSTOM_HEAP_ELEMENT -DHEAP_ORDER="<"
+CFLAGS_heap.c = -DCUSTOM_HEAP_ELEMENT
 CFLAGS_hufftree.c = -DCUSTOM_HEAP_ELEMENT
 
 ## Test
@@ -26,6 +26,7 @@ test: $(TARGET) $(TESTFILE)
 	@./pak $(TESTFILE)
 	@./unpak $(TESTFILE).pak
 	@$(DIFF) $(TESTFILE).orig $(TESTFILE) && $(ECHO) SUCCESS
+	@$(DIFF) $(TESTFILE).orig $(TESTFILE) || $(ECHO) FAILURE
 
 ### Dependencies
 
