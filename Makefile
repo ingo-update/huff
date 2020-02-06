@@ -10,8 +10,8 @@ TESTOBJS = $(TESTDIR)/heap.o
 include $(MAKEDIR)/build.gmk
 include $(MAKEDIR)/test.gmk
 
-CFLAGS_heap.c = -DCUSTOM_HEAP_ELEMENT
-CFLAGS_hufftree.c = -DCUSTOM_HEAP_ELEMENT
+CFLAGS_heap.o = -DCUSTOM_HEAP_ELEMENT
+CFLAGS_hufftree.o = -DCUSTOM_HEAP_ELEMENT
 
 ## Test
 
