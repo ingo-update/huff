@@ -77,13 +77,15 @@ int main()
 
   fail += test_bitstrings();
 
-  if (fail)
+  fprintf(stdout, "test_bitstring: ");
+  if (0 == fail)
+    {
+      fprintf(stdout, "SUCCESS\n");
+      exit(EXIT_SUCCESS);
+    }
+  else
     {
       fprintf(stderr, "FAILURE: %d failures detected.\n", fail);
       return EXIT_FAILURE;
     }
-  else
-  {
-    return EXIT_SUCCESS;
-  }
 }
