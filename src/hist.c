@@ -19,7 +19,7 @@ static void _write_int(FILE *s, int i)
 
 static int _read_int(FILE *s)
 {
-  int i,c;
+  int i, c;
 
   i = c = 0;
   while ('\n' != c)

@@ -84,7 +84,7 @@ int main()
   fail += test_heap();
   fail += test_heapsort();
 
-    if (fail)
+  if (fail)
     {
       fprintf(stderr, "FAILURE: %d failures detected.\n", fail);
       return EXIT_FAILURE;
