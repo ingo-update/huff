@@ -36,9 +36,9 @@ static int _read_int(FILE *s)
 
 void hist_store(FILE *s, int *hist)
 {
-  unsigned char c;
+  unsigned int c;
 
-  for (c = 0 ; c < 255 ; ++c)
+  for (c = 0 ; c < 256 ; ++c)
     {
       if (0 < hist[c])
 	{
