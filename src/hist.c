@@ -59,13 +59,11 @@ void hist_store(FILE *s, int *hist)
 void hist_load(FILE *s, int *hist)
 {
   unsigned char c, pc;
+  int i;
   int f = 1;
 
   /* Clear histogram */
-  for (c = 0 ; c < 255 ; ++c)
-    {
-      hist[c] = 0;
-    }
+  for (i = 0 ; i < 256 ; ++i) hist[i] = 0;
 
   /* Read frequency data into histogram */
   c = 0;
