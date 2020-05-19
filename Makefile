@@ -17,6 +17,7 @@ CFLAGS_hufftree.o = -DCUSTOM_HEAP_ELEMENT
 
 TESTFILE = $(BUILDDIR)/test/testfile
 $(TESTFILE): $(SRCFILES)
+	@$(ECHO) Creating test file $@
 	@$(MKDIR) $(dir $@)
 	@$(CAT) $^ > $@
 

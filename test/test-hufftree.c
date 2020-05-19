@@ -14,19 +14,36 @@ int test_datatype()
   b = hufftree_leaf('b', 42);
   c = hufftree_link(a, b);
 
-  if (!hufftree_is_leaf(a))
+  if (NULL == a)
     {
-      fprintf(stderr, "FAILURE, tree a should be a leaf!\n");
+      fprintf(stderr, "FAIL, couldn't create first hufftree leaf\n");
       ++fail;
     }
-  if (!hufftree_is_leaf(b))
+  else if (!hufftree_is_leaf(a))
     {
-      fprintf(stderr, "FAILURE, tree a should be a leaf!\n");
+      fprintf(stderr, "FAIL, first tree should be a leaf\n");
       ++fail;
     }
-  if (hufftree_is_leaf(c))
+
+  if (NULL == b)
     {
-      fprintf(stderr, "FAILURE, tree a should not be a leaf!\n");
+      fprintf(stderr, "FAIL, couldn't create second hufftree leaf\n");
+      ++fail;
+    }
+  else if (!hufftree_is_leaf(b))
+    {
+      fprintf(stderr, "FAIL, second tree should be a leaf\n");
+      ++fail;
+    }
+
+  if (NULL == c)
+    {
+      fprintf(stderr, "FAIL, couldn't link hufftrees\n");
+      ++fail;
+    }
+  else if (hufftree_is_leaf(c))
+    {
+      fprintf(stderr, "FAIL, third tree should not be a leaf\n");
       ++fail;
     }
 
@@ -35,29 +52,29 @@ int test_datatype()
 
   if (NULL == d)
     {
-      fprintf(stderr, "FAILURE, no left branch of c\n");
+      fprintf(stderr, "FAIL, no left branch of linked tree\n");
       ++fail;
     }
   else if ('a' != hufftree_char(d))
     {
-      fprintf(stderr, "FAILURE, left branch is '%c', should be 'a'\n", hufftree_char(d));
+      fprintf(stderr, "FAIL, left branch is '%c', should be 'a'\n", hufftree_char(d));
       ++fail;
     }
 
   if (NULL == e)
     {
-      fprintf(stderr, "FAILURE, no right branch of c\n");
+      fprintf(stderr, "FAIL, no right branch of linked tree\n");
       ++fail;
     }
   else if ('b' != hufftree_char(e))
     {
-      fprintf(stderr, "FAILURE, right branch is '%c', should be 'b'\n", hufftree_char(e));
+      fprintf(stderr, "FAIL, right branch is '%c', should be 'b'\n", hufftree_char(e));
       ++fail;
     }
 
   if (c->weight != 42 + 17)
     {
-      fprintf(stderr, "FAILURE, combined weight is %d, should be %d\n", c->weight, 42 + 17);
+      fprintf(stderr, "FAIL, combined weight is %d, should be %d\n", c->weight, 42 + 17);
       ++fail;
     }
 
@@ -68,10 +85,7 @@ int main()
 {
   int fail = 0;
 
-  if (!fail)
-    {
-      fail += test_datatype();
-    }
+  fail += test_datatype();
 
   if (fail)
     {
