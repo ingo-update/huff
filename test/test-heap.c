@@ -63,7 +63,7 @@ int test_heapsort()
 
   if (fail)
     {
-      fprintf(stderr, "Failure: test_heapsort Array is not correctly sorted:");
+      fprintf(stderr, "Failure: test_heapsort() Array is not correctly sorted:");
 
       for (i = 0 ; i < 10 ; ++i)
 	{

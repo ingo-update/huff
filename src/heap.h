@@ -20,10 +20,13 @@ struct heap_t
 };
 
 heap build_heap(heap_element *a, int s);
-void heap_sort(heap_element *a, int s);
 
 int heap_size(heap h);
 void heap_insert(heap h, heap_element e);
 heap_element heap_extract(heap h);
+
+#ifndef OMIT_HEAP_SORT
+void heap_sort(heap_element *a, int s);
+#endif // OMIT_HEAP_SORT
 
 #endif /* _HEAP_H_ */
