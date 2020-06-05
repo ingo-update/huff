@@ -19,7 +19,7 @@ static void _write_int(FILE *s, int i)
 
 static int _read_int(FILE *s)
 {
-  int i,c;
+  int i, c;
 
   i = c = 0;
   while ('\n' != c)
@@ -36,9 +36,9 @@ static int _read_int(FILE *s)
 
 void hist_store(FILE *s, int *hist)
 {
-  unsigned char c;
+  unsigned int c;
 
-  for (c = 0 ; c < 255 ; ++c)
+  for (c = 0 ; c < 256 ; ++c)
     {
       if (0 < hist[c])
 	{
@@ -59,13 +59,11 @@ void hist_store(FILE *s, int *hist)
 void hist_load(FILE *s, int *hist)
 {
   unsigned char c, pc;
+  int i;
   int f = 1;
 
   /* Clear histogram */
-  for (c = 0 ; c < 255 ; ++c)
-    {
-      hist[c] = 0;
-    }
+  for (i = 0 ; i < 256 ; ++i) hist[i] = 0;
 
   /* Read frequency data into histogram */
   c = 0;
