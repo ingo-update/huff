@@ -6,7 +6,7 @@
 #else
 #define heap_element int
 #define heap_order(x,y) ((x) > (y))
-#endif
+#endif /* CUSTOM_HEAP_ELEMENT */
 
 #define left(x) (2*x)+1
 #define right(x) (2*x)+2

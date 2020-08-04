@@ -73,8 +73,8 @@ heap build_heap(heap_element *a, int s)
   return new;
 }
 
-/* heap_sort() Sort an array using heap sort. Not used by the huffman
- * compression programs.
+/* heap_sort()
+ * Sort an array using heap sort.
  */
 
 void heap_sort(heap_element *a, int s)
