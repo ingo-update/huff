@@ -63,7 +63,7 @@ int test_heapsort()
 
   if (fail)
     {
-      fprintf(stderr, "Failure: test_heapsort Array is not correctly sorted:");
+      fprintf(stderr, "Failure: test_heapsort() Array is not correctly sorted:");
 
       for (i = 0 ; i < 10 ; ++i)
 	{
@@ -84,13 +84,15 @@ int main()
   fail += test_heap();
   fail += test_heapsort();
 
-  if (fail)
+  fprintf(stdout, "test_heap: ");
+  if (0 == fail)
+    {
+      fprintf(stdout, "SUCCESS\n");
+      exit(EXIT_SUCCESS);
+    }
+  else
     {
       fprintf(stderr, "FAILURE: %d failures detected.\n", fail);
       return EXIT_FAILURE;
     }
-  else
-  {
-    return EXIT_SUCCESS;
-  }
 }

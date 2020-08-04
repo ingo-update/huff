@@ -73,32 +73,6 @@ heap build_heap(heap_element *a, int s)
   return new;
 }
 
-/* heap_sort()
- * Sort an array using heap sort.
- */
-
-void heap_sort(heap_element *a, int s)
-{
-  heap h;
-  int i;
-
-  /* Build a heap of the array */
-  h = build_heap(a, s);
-
-  for (i = s - 1 ; i >= 0 ; --i)
-    {
-      /* Exchange the top element of the heap with the last one */
-      _exchange(h->array, 0, i);
-
-      /* Decrease size and heapify */
-      --h->size;
-      _heapify(h, 0);
-    }
-
-  /* Throw away the heap wrapper */
-  free(h);
-}
-
 /* heap_size()
  * return the current size of a heap.
  */
@@ -157,3 +131,31 @@ heap_element heap_extract(heap a)
 
   return x;
 }
+
+/* heap_sort()
+ * Sort an array using heap sort.
+ */
+
+#ifndef OMIT_HEAP_SORT
+void heap_sort(heap_element *a, int s)
+{
+  heap h;
+  int i;
+
+  /* Build a heap of the array */
+  h = build_heap(a, s);
+
+  for (i = s - 1 ; i >= 0 ; --i)
+    {
+      /* Exchange the top element of the heap with the last one */
+      _exchange(h->array, 0, i);
+
+      /* Decrease size and heapify */
+      --h->size;
+      _heapify(h, 0);
+    }
+
+  /* Throw away the heap wrapper */
+  free(h);
+}
+#endif // OMIT_HEAP_SORT
