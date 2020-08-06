@@ -58,19 +58,19 @@ int main()
 {
   int fail;
 
+  fprintf(stdout, "test_hist: ");
   fail = 0;
 
   fail += test_hist();
 
-  fprintf(stdout, "test_hist: ");
   if (0 == fail)
     {
       fprintf(stdout, "SUCCESS\n");
-      exit(EXIT_SUCCESS);
+      return EXIT_SUCCESS;
     }
   else
     {
-      fprintf(stderr, "FAILURE: %d failures detected.\n", fail);
+      fprintf(stdout, "FAILURE: %d failures detected.\n", fail);
       return EXIT_FAILURE;
     }
 }

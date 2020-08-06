@@ -85,17 +85,17 @@ int main()
 {
   int fail = 0;
 
+  fprintf(stdout, "test_hufftree: ");
   fail += test_datatype();
 
-  fprintf(stdout, "test_hufftree: ");
   if (0 == fail)
     {
       fprintf(stdout, "SUCCESS\n");
-      exit(EXIT_SUCCESS);
+      return EXIT_SUCCESS;
     }
   else
     {
       fprintf(stdout, "FAILURE; %d tests failed.\n", fail);
-      exit(EXIT_FAILURE);
+      return EXIT_FAILURE;
     }
 }

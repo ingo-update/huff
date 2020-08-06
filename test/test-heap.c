@@ -91,20 +91,20 @@ int main()
 {
   int fail;
 
+  fprintf(stdout, "test_heap: ");
   fail = 0;
 
   fail += test_heap();
   fail += test_heapsort();
 
-  fprintf(stdout, "test_heap: ");
   if (0 == fail)
     {
       fprintf(stdout, "SUCCESS\n");
-      exit(EXIT_SUCCESS);
+      return EXIT_SUCCESS;
     }
   else
     {
-      fprintf(stderr, "FAILURE: %d failures detected.\n", fail);
+      fprintf(stdout, "FAILURE: %d failures detected.\n", fail);
       return EXIT_FAILURE;
     }
 }
