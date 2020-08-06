@@ -36,7 +36,7 @@ void bitstring_remove(bitstring bs)
 }
 
 /* bitstring_add()
- * Add a bit to the right of a bit string.
+ * Create a new bitstring with a new bit added at the right.
  */
 
 bitstring bitstring_add(bitstring bs, int bit)
@@ -49,7 +49,7 @@ bitstring bitstring_add(bitstring bs, int bit)
       return NULL;
     }
 
-  if (sizeof(long long) * 8 == bs->length)
+  if (sizeof(long long) * 8 <= bs->length)
     {
       fprintf(stderr,"bitstring_add() - bitstring too long.\n");
       return NULL;
@@ -71,7 +71,12 @@ int bitstring_bit(bitstring bs, int b)
   if (NULL == bs)
     {
       fprintf(stderr,"bitstring_bit() - bitstring uninitialized (NULL).\n");
-      return 0;
+      return -1;
+    }
+  else if (b > bs->length)
+    {
+      fprintf(stderr,"bitstring_bit() - bit outside string requested.\n");
+      return -2;
     }
   else
     {

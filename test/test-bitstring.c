@@ -55,11 +55,15 @@ int test_bitstrings()
       fprintf(stderr, "FAIL: Bit 5 should not be a %d, it should be 0.\n", bitstring_bit(b, 5));
     }
 
-  b = bitstring_empty();
-  for (i = 0 ; i < 65 ; ++i)
+  i = bitstring_bit(b, 11);
+  if (0 == i || 1 == i)
     {
-      b = bitstring_add(b, i);
+      ++fail;
+      fprintf(stderr, "FAIL: Could read bit 11 of 10 bit bitstring.\n");
     }
+
+  b = bitstring_empty();
+  for (i = 0 ; i < 65 ; ++i) b = bitstring_add(b, i);
   if (NULL != b)
     {
       ++fail;
