@@ -62,13 +62,15 @@ int main()
 
   fail += test_hist();
 
-  if (fail)
+  fprintf(stdout, "test_hist: ");
+  if (0 == fail)
+    {
+      fprintf(stdout, "SUCCESS\n");
+      exit(EXIT_SUCCESS);
+    }
+  else
     {
       fprintf(stderr, "FAILURE: %d failures detected.\n", fail);
       return EXIT_FAILURE;
     }
-  else
-  {
-    return EXIT_SUCCESS;
-  }
 }
