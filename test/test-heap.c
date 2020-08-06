@@ -1,28 +1,31 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "heap.h"
+
+#define HEAPSIZE 100000
 
 int test_heap()
 {
   int i, p, q;
   heap x;
   int *xa;
-  int a[10] = {40,21,62,33,94,75,86,17,58,59};
   int fail = 0;
 
-  /* Insert a bunch of elements in the heap */
-  xa = malloc(sizeof(int) * 10);
-  x = build_heap(xa, 0);
-  for (i = 0 ; i < 10 ; ++i)
-    {
-      heap_insert(x, a[i]);
-    }
+  /* Randomize */
+  srand(time(0));
 
-  if (heap_size(x) != 10)
+  /* Create an empty heap and insert a bunch of random ints into it */
+  xa = malloc(sizeof(int) * HEAPSIZE);
+  x = build_heap(xa, 0);
+  for (i = 0 ; i < HEAPSIZE ; ++i) heap_insert(x, rand());
+
+  /* Check that size increased correctly */
+  if (heap_size(x) != HEAPSIZE)
     {
       ++ fail;
-      fprintf(stderr, "Failure: test_heap(): heap_size is %d after 10 insertions.\n", heap_size(x));
+      fprintf(stderr, "Failure: test_heap(): heap_size is %d after %d insertions.\n", heap_size(x), HEAPSIZE);
     }
 
   /* Extract elements in correct order */
@@ -44,12 +47,21 @@ int test_heap()
 int test_heapsort()
 {
   int fail, i, x;
-  int a[10] = {40,21,62,33,94,75,86,17,58,59};
+  int *a;
 
-  heap_sort(a, 10);
+  /* Randomize */
+  srand(time(0));
 
+  /* Make a random array */
+  a = malloc(sizeof(int) * HEAPSIZE);
+  for (i = 0 ; i < HEAPSIZE ; ++i) a[i] = rand();
+
+  /* Sort the array */
+  heap_sort(a, HEAPSIZE);
+
+  /* Check that it is sorted */
   fail = x = 0;
-  for (i = 0 ; i < 10 ; ++i)
+  for (i = 0 ; i < HEAPSIZE ; ++i)
     {
       if (a[i] < x)
 	{
@@ -65,7 +77,7 @@ int test_heapsort()
     {
       fprintf(stderr, "Failure: test_heapsort() Array is not correctly sorted:");
 
-      for (i = 0 ; i < 10 ; ++i)
+      for (i = 0 ; i < HEAPSIZE ; ++i)
 	{
 	  fprintf(stderr, " %d", a[i]);
 	}
