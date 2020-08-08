@@ -132,8 +132,8 @@ heap_element heap_extract(heap a)
   return x;
 }
 
-/* heap_sort() Sort an array using heap sort. Not used by the huffman
- * compression programs.
+/* heap_sort()
+ * Sort an array using heap sort.
  */
 
 #ifndef OMIT_HEAP_SORT
