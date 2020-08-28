@@ -33,19 +33,13 @@ int main(int argc, char **argv)
     }
 
   /* Zero the histogram array. */
-  for (i = 0 ; i < 256 ; ++i)
-    {
-      hist[i] = 0;
-    }
+  for (i = 0 ; i < 256 ; ++i) hist[i] = 0;
 
   /* Count input characters. */
   while (!feof(infile))
     {
       inc = fgetc(infile);
-      if (!feof(infile))
-	{
-	  ++ hist[inc];
-	}
+      if (!feof(infile)) ++hist[inc];
     }
 
   /* Close the infile. */
