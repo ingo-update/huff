@@ -45,9 +45,8 @@ void encode(FILE *infile, FILE *outfile, int *hist)
 	  /* Output all bits in the bitstring. */
 	  while (0 <= inp)
 	    {
-	      bit = bitstring_bit(b, inp);
-	      outc = (outc | (bit << outp));
-	      --outp ; --inp;
+	      bit = bitstring_bit(b, inp--);
+	      outc = (outc | (bit << outp--));
 
 	      /* Send full bytes to output file. */
 	      if (0 > outp)
@@ -60,19 +59,10 @@ void encode(FILE *infile, FILE *outfile, int *hist)
     }
 
   /* If a byte was not finished, output it anyway. */
-  if (7 != outp)
-    {
-      fputc(outc, outfile);
-    }
+  if (7 != outp) fputc(outc, outfile);
 
   /* Free the bitstring array and its content. */
-  for (i = 0 ; i < 256 ; ++i)
-    {
-      if (NULL != bs[i])
-	{
-	  bitstring_remove(bs[i]);
-	}
-    }
+  for (i = 0 ; i < 256 ; ++i) if (bs[i]) bitstring_remove(bs[i]);
   free(bs);
 
   return;
