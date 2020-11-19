@@ -25,10 +25,7 @@ static int _read_int(FILE *s)
   while ('\n' != c)
     {
       c = fgetc(s);
-      if (('0' <= c) && ('9' >= c))
-	{
-	  i = i * 10 + (c - '0');
-	}
+      if (('0' <= c) && ('9' >= c)) i = i * 10 + (c - '0');
     }
 
   return i;
@@ -83,8 +80,7 @@ void hist_load(FILE *s, int *hist)
 	      fprintf(stderr, "hist_load(): Error in histogram, %d (%c) not allowed after %d (%c).\n", c, c, pc, pc);
 	      exit(EXIT_FAILURE);
 	    }
-
-     	  hist[c] = f;
+	  hist[c] = f;
 	}
     }
 
