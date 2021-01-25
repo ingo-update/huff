@@ -63,24 +63,15 @@ int test_heapsort()
   fail = x = 0;
   for (i = 0 ; i < HEAPSIZE ; ++i)
     {
-      if (a[i] < x)
-	{
-	  fail = 1;
-	}
-      else
-	{
-	  x = a[i];
-	}
+      if (a[i] < x) fail = 1;
+      else x = a[i];
     }
 
   if (fail)
     {
       fprintf(stderr, "Failure: test_heapsort() Array is not correctly sorted:");
 
-      for (i = 0 ; i < HEAPSIZE ; ++i)
-	{
-	  fprintf(stderr, " %d", a[i]);
-	}
+      for (i = 0 ; i < HEAPSIZE ; ++i) fprintf(stderr, " %d", a[i]);
       fprintf(stderr, "\n");
     }
 
