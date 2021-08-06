@@ -113,7 +113,7 @@ hufftree hufftree_build(int *hist)
 
   /* Make hufftree leaves and put them into an array. */
   size = 0;
-  for (i = 0 ; i < 255 ; ++i)
+  for (i = 0 ; i < 256 ; ++i)
     {
       /* No zero-weight leaves! */
       if (0 < hist[i])
