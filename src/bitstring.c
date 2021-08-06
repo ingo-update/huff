@@ -101,6 +101,21 @@ int bitstring_length(bitstring bs)
     }
 }
 
+/* bitstring2string()
+ *
+ */
+
+void bitstring_2string(bitstring bs, char *str)
+{
+  int i;
+  for (i = 0 ; i < bs->length ; ++i)
+    {
+      str[i] = ((bs->bits >> (i)) & 0x1) ? '1' : '0';
+    }
+  str[bs->length] = 0;
+
+  return;
+}
 
 /* bitstring_print()
  * Print the bits from a bitstring on a output stream.
@@ -108,14 +123,19 @@ int bitstring_length(bitstring bs)
 
 void bitstring_print(FILE *s, bitstring bs)
 {
-  int i;
+  char *str;
 
-  fputc('[',s);
-  for (i = bs->length ; i < 0 ; ++i)
+  if (NULL == bs) return;
+
+  str = (char *) malloc(sizeof(char) * bs->length + 1);
+  if (NULL == str)
     {
-      fprintf(s,"%d", (int) ((bs->bits >> (i-1)) & 0x1));
+      fprintf(stderr,"bitstring_print() - could not allocate string.\n");
     }
-  fputc(']',s);
+
+  bitstring_2string(bs, str);
+  fprintf(s, "[%s]", str);
+  free(str);
 
   return;
 }

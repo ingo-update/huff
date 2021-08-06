@@ -1,14 +1,19 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "bitstring.h"
 
 int test_bitstrings()
 {
   int i, fail;
-  bitstring b = NULL;
+  bitstring b;
+  char *c1;
+  char *c2 = "1010101010";
 
   fail = 0;
 
+  /* Test behaviour when bitstring is uninitialized */
+  b = NULL;
   if (0 != bitstring_length(b))
     {
       ++fail;
@@ -22,6 +27,7 @@ int test_bitstrings()
       fprintf(stderr, "FAIL: Could add to uninitialized bitstring.\n");
     }
 
+  /* Test empty bitstring */
   b = bitstring_empty();
   if (NULL == b)
     {
@@ -34,11 +40,13 @@ int test_bitstrings()
       fprintf(stderr, "FAIL: Empty bitstring should not have length %d.\n", bitstring_length(b));
     }
 
+  /* Build bitstring with 10 alternating bits [1010101010]*/
   for (i = 0 ; i < 10 ; ++i)
     {
       b = bitstring_add(b, i);
     }
 
+  /* Test that bitstring was created corretly */
   if (10 != bitstring_length(b))
     {
       ++fail;
@@ -60,6 +68,22 @@ int test_bitstrings()
     {
       ++fail;
       fprintf(stderr, "FAIL: Could read bit 11 of 10 bit bitstring.\n");
+    }
+
+  /* Prepare a test string */
+  c1 = (char *) malloc(sizeof(char) * bitstring_length(b));
+  if (NULL == c1)
+    {
+      ++fail;
+      fprintf(stderr, "ERROR: Could not allocate test string.\n");
+    }
+
+  /* Test string conversion */
+  bitstring_2string(b, c1);
+  if (strncmp(c1, c2, 10))
+    {
+      ++fail;
+      fprintf(stderr, "FAIL: String conversion failed. Got %s, expected %s.\n", c1, c2);
     }
 
   b = bitstring_empty();
