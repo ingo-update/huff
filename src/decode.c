@@ -9,12 +9,12 @@
 void decode(FILE *infile, FILE *outfile, int *hist)
 {
   unsigned char inc;
-  int i, j, len, bit;
+  int i, j, len;
   hufftree tree, tp;
 
   /* Count characters in histogram (= length of original data). */
   len = 0;
-  for (i = 0 ; i < 255 ; ++i) len += hist[i];
+  for (i = 0 ; i < 256 ; ++i) len += hist[i];
 
   /* Build the tree. */
   tree = hufftree_build(hist);
@@ -29,10 +29,8 @@ void decode(FILE *infile, FILE *outfile, int *hist)
       /* Go through the tree bit by bit. */
       for (j = 7 ; j >= 0 ; --j)
 	{
-	  bit = (inc >> j) & 0x1;
-
 	  /* Follow left or right depending on value of bit. */
-	  tp = (bit ? hufftree_right(tp) : hufftree_left(tp));
+	  tp = ((inc >> j) & 0x1 ? hufftree_right(tp) : hufftree_left(tp));
 
 	  /* Found a leaf yet? */
 	  if (hufftree_is_leaf(tp))
