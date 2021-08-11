@@ -8,7 +8,6 @@
 #include "heap.h"
 
 /* Exchange two elements in the heap array. */
-
 static void _exchange(heap_element *a, int x, int y)
 {
   heap_element t;
@@ -22,7 +21,6 @@ static void _exchange(heap_element *a, int x, int y)
 
 /* Restore the heap property in a heap rooted in i where both subtrees are
  * heaps. */
-
 static void _heapify(heap a, int i)
 {
   int l, r, s, x;

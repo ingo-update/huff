@@ -8,7 +8,7 @@
 #include "hufftree.h"
 #include "bitstring.h"
 
-void encode(FILE *infile, FILE *outfile, int *hist)
+void encode(FILE *infile, FILE *outfile, int *hist, int print_bit_strings)
 {
   unsigned char outc, inc;
   int i, outp, inp, bit;
@@ -29,6 +29,19 @@ void encode(FILE *infile, FILE *outfile, int *hist)
 
   /* Build bitstring array from the tree. */
   hufftree_scan(t, bitstring_empty(), bs);
+
+  if (print_bit_strings)
+    {
+      for (i = 0 ; i < 256 ; ++i)
+	{
+	  if (bs[i])
+	    {
+	      fprintf(stdout, "0x%02x '%c' ", i, i);
+	      bitstring_print(stdout, bs[i]);
+	      fprintf(stdout, "\n");
+	    }
+	}
+    }
 
   /* Encode all characters in the file. */
   outp = 7; outc = 0;

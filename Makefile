@@ -24,7 +24,7 @@ $(TESTFILE): $(SRCFILES)
 test: $(TARGET) $(TESTFILE)
 	@$(ECHO) Testing target $(TARGET)
 	@$(CP) $(TESTFILE) $(TESTFILE).orig
-	@./pak $(TESTFILE)
+	@./pak -b $(TESTFILE) > $(BUILDDIR)/test/pak.hist
 	@./unpak $(TESTFILE).pak
 	@$(DIFF) $(TESTFILE).orig $(TESTFILE) && $(ECHO) SUCCESS
 	@$(DIFF) $(TESTFILE).orig $(TESTFILE) || $(ECHO) FAILURE

@@ -9,51 +9,82 @@
 #include "hist.h"
 #include "encode.h"
 
+void _print_usage(char *name)
+{
+  fprintf(stderr, "Usage:\n%s [-b, -h] <filename>\n", name);
+}
+
 int main(int argc, char **argv)
 {
   FILE *infile, *outfile;
+  char *filename;
+  int print_bit_strings;
   int hist[256];
   int i;
-  unsigned char inc;
   char outname[100];
 
-  /* Check that we got exactly one argument. */
-  if (2 != argc)
+  /* Check arguments */
+  if (argc >= 2 && argv[1][0] == '-')
+    if (argv[1][1] == 'h')
+      {
+	_print_usage(argv[0]);
+	exit(EXIT_SUCCESS);
+      }
+    else if (argv[1][1] == 'b') /* Print all bitstrings to stdout */
+      {
+	if (argc != 3) /* Filename required */
+	  {
+	    _print_usage(argv[0]);
+	    exit(EXIT_FAILURE);
+	  }
+	else
+	  {
+	    print_bit_strings = 1;
+	    filename = argv[2];
+	  }
+      }
+    else /* Illegal argument*/
+      {
+	_print_usage(argv[0]);
+	exit(EXIT_FAILURE);
+      }
+  else if (argc == 2)
     {
-      fprintf(stderr, "Usage:\n%s <filename>\n", argv[0]);
-      exit(EXIT_FAILURE);
+      print_bit_strings = 0;
+      filename = argv[1];
     }
-
-  /* Open the input file to create character statistics. */
-  infile = fopen(argv[1] ,"r");
-  if (NULL == infile)
+  else
     {
-      fprintf(stderr, "Could not open input file '%s'.\n", argv[1]);
+      _print_usage(argv[0]);
       exit(EXIT_FAILURE);
     }
 
   /* Zero the histogram array. */
   for (i = 0 ; i < 256 ; ++i) hist[i] = 0;
 
-  /* Count input characters. */
-  while (!feof(infile))
+  /* Open the input file to create character histogram. */
+  infile = fopen(filename ,"r");
+  if (NULL == infile)
     {
-      inc = fgetc(infile);
-      if (!feof(infile)) ++hist[inc];
+      fprintf(stderr, "Could not open input file '%s'.\n", filename);
+      exit(EXIT_FAILURE);
     }
+
+  /* Count input characters. */
+  while (!feof(infile)) if (!feof(infile)) ++hist[fgetc(infile)];
 
   /* Close the infile. */
   fclose(infile);
 
-  /* Create output file name. (TODO: Could be smarter.) */
-  strncpy(outname, argv[1], 95);
+  /* Create output file name. (TODO: Should be smarter.) */
+  strncpy(outname, filename, 95);
   strncat(outname, SUFFIX, 95);
 
   /* Open the files for compression. */
-  infile = fopen(argv[1], "r");
+  infile = fopen(filename, "r");
   if (NULL == infile)
     {
-      fprintf(stderr, "Could not open input file '%s'.\n", argv[1]);
+      fprintf(stderr, "Could not open input file '%s'.\n", filename);
       exit(EXIT_FAILURE);
     }
 
@@ -68,7 +99,7 @@ int main(int argc, char **argv)
   hist_store(outfile, hist);
 
   /* Compress infile to outfile. */
-  encode(infile, outfile, hist);
+  encode(infile, outfile, hist, print_bit_strings);
 
   /* Close files. */
   fclose(infile);
