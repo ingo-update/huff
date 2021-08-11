@@ -34,6 +34,8 @@ int test_hist()
 
   fclose(infile);
 
+  /* Test that hist_store and hist_load keep histogram integrity. */
+
   histfile = fopen(TEST_HIST_FILE, "w");
   hist_store(histfile, hist0);
   fclose(histfile);
