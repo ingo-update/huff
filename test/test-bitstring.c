@@ -20,6 +20,13 @@ int test_bitstrings()
       fprintf(stderr, "FAIL: Uninitialized bitstring has unexpected length %d.\n", bitstring_length(b));
     }
 
+  i = bitstring_bit(b, 17);
+  if (-1 != i)
+    {
+      ++fail;
+      fprintf(stderr, "FAIL: Could read bit from uninitialized bitstring.\n");
+    }
+
   b = bitstring_add(b, 0);
   if (NULL != b)
     {
@@ -64,7 +71,7 @@ int test_bitstrings()
     }
 
   i = bitstring_bit(b, 11);
-  if (0 == i || 1 == i)
+  if (-2 != i)
     {
       ++fail;
       fprintf(stderr, "FAIL: Could read bit 11 of 10 bit bitstring.\n");
@@ -79,7 +86,7 @@ int test_bitstrings()
     }
 
   /* Test string conversion */
-  bitstring_2string(b, c1);
+  bitstring_2s(b, c1);
   if (strncmp(c1, c2, 10))
     {
       ++fail;
@@ -95,7 +102,6 @@ int test_bitstrings()
     }
   return fail;
 }
-
 
 int main()
 {

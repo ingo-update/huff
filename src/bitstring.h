@@ -20,7 +20,7 @@ int bitstring_bit(bitstring bs, int b);
 int bitstring_length(bitstring bs);
 
 /* Miscellaneous. */
-void bitstring_2string(bitstring bs, char *str);
+void bitstring_2s(bitstring bs, char *str);
 void bitstring_print(FILE *s, bitstring bs);
 
 #endif /* _BITSTRING_H_ */

@@ -101,18 +101,18 @@ int bitstring_length(bitstring bs)
     }
 }
 
-/* bitstring2string()
- *
+/* bitstring_2s()
+ * Return a string of 1s and 0s representing the bitstring.
  */
 
-void bitstring_2string(bitstring bs, char *str)
+void bitstring_2s(bitstring bs, char *str)
 {
   int i;
   for (i = 0 ; i < bs->length ; ++i)
     {
       str[i] = ((bs->bits >> (i)) & 0x1) ? '1' : '0';
     }
-  str[bs->length] = 0;
+  str[bs->length] = '\0';
 
   return;
 }
@@ -133,7 +133,7 @@ void bitstring_print(FILE *s, bitstring bs)
       fprintf(stderr,"bitstring_print() - could not allocate string.\n");
     }
 
-  bitstring_2string(bs, str);
+  bitstring_2s(bs, str);
   fprintf(s, "[%s]", str);
   free(str);
 
