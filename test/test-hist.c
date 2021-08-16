@@ -60,7 +60,7 @@ int main()
 {
   int fail;
 
-  fprintf(stdout, "test_hist: ");
+  fprintf(stdout, "test-hist: ");
   fail = 0;
 
   fail += test_hist();

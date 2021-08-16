@@ -85,7 +85,7 @@ int main()
 {
   int fail = 0;
 
-  fprintf(stdout, "test_hufftree: ");
+  fprintf(stdout, "test-hufftree: ");
   fail += test_datatype();
 
   if (0 == fail)

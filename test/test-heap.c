@@ -82,7 +82,7 @@ int main()
 {
   int fail;
 
-  fprintf(stdout, "test_heap: ");
+  fprintf(stdout, "test-heap: ");
   fail = 0;
 
   fail += test_heap();

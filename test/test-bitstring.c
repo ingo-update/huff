@@ -101,7 +101,7 @@ int main()
 {
   int fail;
 
-  fprintf(stdout, "test_bitstring: ");
+  fprintf(stdout, "test-bitstring: ");
   fail = 0;
 
   fail += test_bitstrings();
