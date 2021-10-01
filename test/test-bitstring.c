@@ -3,14 +3,29 @@
 
 #include "bitstring.h"
 
+/* Must be odd and greater than 5 */
+#define TESTSTRING_LENGTH 25
+
 int test_bitstrings()
 {
   int i, fail;
   bitstring b;
-  char *c1;
-  char *c2 = "1010101010";
+  char *c1, *c2;
 
   fail = 0;
+
+  /* Prepare some test strings */
+  c1 = (char *) malloc(sizeof(char) * TESTSTRING_LENGTH);
+  c2 = (char *) malloc(sizeof(char) * TESTSTRING_LENGTH);
+  if (NULL == c1 || NULL == c2)
+    {
+      ++fail;
+      fprintf(stderr, "ERROR: Could not allocate test strings.\n");
+      return fail;
+    }
+
+  /* Alternating zeroes and ones */
+  for (i = 0 ; i < TESTSTRING_LENGTH ; ++i) c2[i] = i & 0x1 ? '1' : '0';
 
   /* Test behaviour when bitstring is uninitialized */
   b = NULL;
@@ -47,50 +62,48 @@ int test_bitstrings()
       fprintf(stderr, "FAIL: Empty bitstring should not have length %d.\n", bitstring_length(b));
     }
 
-  /* Build bitstring with 10 alternating bits [1010101010]*/
-  for (i = 0 ; i < 10 ; ++i)
+  /* Build bitstring with alternating bits. Even bits 0 and odd bits 1*/
+  for (i = 0 ; i < TESTSTRING_LENGTH ; ++i)
     {
-      b = bitstring_add(b, i);
+      b = bitstring_add(b, i & 0x1);
+      if (NULL == b)
+	{
+	  ++fail;
+	  fprintf(stderr, "ERROR: Could not add bit number %d to a bitstring (bitstring too long).\n", i);
+	  return fail;
+	}
     }
 
   /* Test that bitstring was created corretly */
-  if (10 != bitstring_length(b))
+  if (TESTSTRING_LENGTH != bitstring_length(b))
     {
       ++fail;
-      fprintf(stderr, "FAIL: Bitstring with 10 bits should not have length %d.\n", bitstring_length(b));
+      fprintf(stderr, "FAIL: Bitstring with %d bits should not have length %d.\n", TESTSTRING_LENGTH, bitstring_length(b));
     }
-  else if (1 != bitstring_bit(b, 2))
+  if (0 != bitstring_bit(b, 2))
     {
       ++fail;
-      fprintf(stderr, "FAIL: Bit 2 should not be a %d, it should be 1.\n", bitstring_bit(b, 2));
+      fprintf(stderr, "FAIL: Bit 2 should not be a %d, it should be a 0.\n", bitstring_bit(b, 2));
     }
-  else if (0 != bitstring_bit(b, 5))
+  if (1 != bitstring_bit(b, 5))
     {
       ++fail;
-      fprintf(stderr, "FAIL: Bit 5 should not be a %d, it should be 0.\n", bitstring_bit(b, 5));
+      fprintf(stderr, "FAIL: Bit 5 should not be a %d, it should be a 1.\n", bitstring_bit(b, 5));
     }
 
-  i = bitstring_bit(b, 11);
+  i = bitstring_bit(b, TESTSTRING_LENGTH + 1);
   if (-2 != i)
     {
       ++fail;
-      fprintf(stderr, "FAIL: Could read bit 11 of 10 bit bitstring.\n");
-    }
-
-  /* Prepare a test string */
-  c1 = (char *) malloc(sizeof(char) * bitstring_length(b));
-  if (NULL == c1)
-    {
-      ++fail;
-      fprintf(stderr, "ERROR: Could not allocate test string.\n");
+      fprintf(stderr, "FAIL: Could read bit outside of bitstring.\n");
     }
 
   /* Test string conversion */
   bitstring_2s(b, c1);
-  if (strncmp(c1, c2, 10))
+  if (strncmp(c1, c2, TESTSTRING_LENGTH))
     {
       ++fail;
-      fprintf(stderr, "FAIL: String conversion failed. Got %s, expected %s.\n", c1, c2);
+      fprintf(stderr, "FAIL: String conversion failed. Got '%s', expected '%s'.\n", c1, c2);
     }
 
   b = bitstring_empty();
@@ -100,6 +113,7 @@ int test_bitstrings()
       ++fail;
       fprintf(stderr, "FAIL: Could build too long bitstring.\n");
     }
+
   return fail;
 }
 
