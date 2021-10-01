@@ -3,6 +3,11 @@
 
 #include "hufftree.h"
 
+#define WEIGHT_L 17
+#define CHAR_L 'x'
+#define WEIGHT_H 4711
+#define CHAR_H 'y'
+
 int test_datatype()
 {
   int fail;
@@ -10,8 +15,8 @@ int test_datatype()
 
   fail = 0;
 
-  a = hufftree_leaf('a', 17);
-  b = hufftree_leaf('b', 42);
+  a = hufftree_leaf(CHAR_L, WEIGHT_L);
+  b = hufftree_leaf(CHAR_H, WEIGHT_H);
   c = hufftree_link(a, b);
 
   if (NULL == a)
@@ -55,9 +60,9 @@ int test_datatype()
       fprintf(stderr, "FAIL, no left branch of linked tree\n");
       ++fail;
     }
-  else if ('a' != hufftree_char(d))
+  else if (CHAR_L != hufftree_char(d))
     {
-      fprintf(stderr, "FAIL, left branch is '%c', should be 'a'\n", hufftree_char(d));
+      fprintf(stderr, "FAIL, left branch is '%c', should be '%c'\n", hufftree_char(d), CHAR_L);
       ++fail;
     }
 
@@ -66,15 +71,15 @@ int test_datatype()
       fprintf(stderr, "FAIL, no right branch of linked tree\n");
       ++fail;
     }
-  else if ('b' != hufftree_char(e))
+  else if (CHAR_H != hufftree_char(e))
     {
-      fprintf(stderr, "FAIL, right branch is '%c', should be 'b'\n", hufftree_char(e));
+      fprintf(stderr, "FAIL, right branch is '%c', should be '%c'\n", hufftree_char(e), CHAR_H);
       ++fail;
     }
 
-  if (c->weight != 42 + 17)
+  if (c->weight != WEIGHT_L + WEIGHT_H)
     {
-      fprintf(stderr, "FAIL, combined weight is %d, should be %d\n", c->weight, 42 + 17);
+      fprintf(stderr, "FAIL, combined weight is %d, should be %d\n", c->weight, WEIGHT_L + WEIGHT_H);
       ++fail;
     }
 

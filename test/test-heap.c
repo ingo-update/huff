@@ -24,7 +24,7 @@ int test_heap()
   /* Check that size increased correctly */
   if (heap_size(x) != HEAPSIZE)
     {
-      ++ fail;
+      ++fail;
       fprintf(stderr, "Failure: test_heap(): heap_size is %d after %d insertions.\n", heap_size(x), HEAPSIZE);
     }
 
@@ -35,7 +35,7 @@ int test_heap()
       q = heap_extract(x);
       if (p < q)
 	{
-	  ++ fail;
+	  ++fail;
 	  fprintf(stderr, "Failure: test_heap(): Out of order elements; %d should not be smaller than %d.\n", p, q);
 	}
       p = q;
