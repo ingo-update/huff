@@ -1,3 +1,6 @@
+### Makefile for huff ###
+
+PROJECT = huff
 TARGET = pak unpak
 
 ifndef MAKEDIR
