@@ -10,8 +10,7 @@ endif
 SPEC = $(MAKEDIR)/spec.gmk
 TESTOBJS = $(TESTDIR)/heap.o
 
-include $(MAKEDIR)/build.gmk
-include $(MAKEDIR)/test.gmk
+include $(MAKEDIR)/main.gmk
 
 CFLAGS_heap.o = -DCUSTOM_HEAP_ELEMENT -DOMIT_HEAP_SORT
 CFLAGS_hufftree.o = -DCUSTOM_HEAP_ELEMENT
