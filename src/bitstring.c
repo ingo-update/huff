@@ -102,7 +102,7 @@ int bitstring_length(bitstring bs)
 }
 
 /* bitstring_2s()
- * Create a string of 1s and 0s representing the bitstring; linit length and return number of bits copied.
+ * Create a string of 1s and 0s representing the bitstring; limit length and return number of bits copied.
  */
 
 int bitstring_2s(bitstring bs, char *str, int maxlen)

@@ -9,7 +9,7 @@ typedef struct bitstring_t *bitstring;
 struct bitstring_t
 {
   long long bits;
-  long length;
+  int length;
 };
 
 /* Constructors/Destructors. */
