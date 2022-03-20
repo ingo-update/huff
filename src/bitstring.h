@@ -3,11 +3,13 @@
 
 #include <stdio.h>
 
+#define MAX_BITSTRING (sizeof(long long) * 8)
+
 typedef struct bitstring_t *bitstring;
 struct bitstring_t
 {
   long long bits;
-  int length;
+  long length;
 };
 
 /* Constructors/Destructors. */
@@ -20,7 +22,8 @@ int bitstring_bit(bitstring bs, int b);
 int bitstring_length(bitstring bs);
 
 /* Miscellaneous. */
-void bitstring_2s(bitstring bs, char *str);
-void bitstring_print(FILE *s, bitstring bs);
+int bitstring_2s(bitstring bs, char *str, int maxlen);
+int bitstring_print(FILE *s, bitstring bs);
+int bitstring_println(FILE *s, bitstring bs);
 
 #endif /* _BITSTRING_H_ */

@@ -49,7 +49,7 @@ bitstring bitstring_add(bitstring bs, int bit)
       return NULL;
     }
 
-  if (sizeof(long long) * 8 <= bs->length)
+  if (MAX_BITSTRING <= bs->length)
     {
       fprintf(stderr,"bitstring_add() - bitstring too long.\n");
       return NULL;
@@ -102,40 +102,62 @@ int bitstring_length(bitstring bs)
 }
 
 /* bitstring_2s()
- * Return a string of 1s and 0s representing the bitstring.
+ * Create a string of 1s and 0s representing the bitstring; linit length and return number of bits copied.
  */
 
-void bitstring_2s(bitstring bs, char *str)
+int bitstring_2s(bitstring bs, char *str, int maxlen)
 {
   int i;
+
+  if (bs->length > maxlen) return 0;
   for (i = 0 ; i < bs->length ; ++i)
     {
       str[i] = ((bs->bits >> (i)) & 0x1) ? '1' : '0';
     }
   str[bs->length] = '\0';
 
-  return;
+  return i;
 }
 
 /* bitstring_print()
  * Print the bits from a bitstring on a output stream.
  */
 
-void bitstring_print(FILE *s, bitstring bs)
+int bitstring_print(FILE *s, bitstring bs)
 {
   char *str;
 
-  if (NULL == bs) return;
+  if (NULL == bs || bs->length < 0 || bs->length > MAX_BITSTRING)
+    {
+      fprintf(stderr,"bitstring_print() - illegal bitstring.");
+      return 0;
+    }
 
   str = (char *) malloc(sizeof(char) * bs->length + 1);
   if (NULL == str)
     {
-      fprintf(stderr,"bitstring_print() - could not allocate string.\n");
+      fprintf(stderr,"bitstring_print() - could not allocate string.");
+      return 0;
     }
+  else
+    {
+      bitstring_2s(bs, str, bs->length);
+      fprintf(s, "[%s]", str);
+      free(str);
+      return 1;
+    }
+}
 
-  bitstring_2s(bs, str);
-  fprintf(s, "[%s]", str);
-  free(str);
+/* bitstring_println()
+ * Print the bits from a bitstring on a output stream, add a newline.
+ */
 
-  return;
+int bitstring_println(FILE *s, bitstring bs)
+{
+  int r;
+
+  r = bitstring_print(s, bs);
+  fputc('\n', s);
+
+  return r;
 }

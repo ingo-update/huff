@@ -99,7 +99,7 @@ int test_bitstrings()
     }
 
   /* Test string conversion */
-  bitstring_2s(b, c1);
+  bitstring_2s(b, c1, TESTSTRING_LENGTH);
   if (strncmp(c1, c2, TESTSTRING_LENGTH))
     {
       ++fail;
@@ -107,11 +107,36 @@ int test_bitstrings()
     }
 
   b = bitstring_empty();
-  for (i = 0 ; i < 65 ; ++i) b = bitstring_add(b, i);
+  for (i = 0 ; i < 1 + MAX_BITSTRING ; ++i) b = bitstring_add(b, i);
   if (NULL != b)
     {
       ++fail;
       fprintf(stderr, "FAIL: Could build too long bitstring.\n");
+    }
+
+  /* Test printing a negative length bitstring */
+  b = bitstring_empty();
+  b->length = -1;
+  if (bitstring_println(stdout, b))
+    {
+      ++fail;
+      fprintf(stderr, "FAIL: Could print negative length bitstring.\n");
+    }
+
+  b->length = 0;
+  if (!bitstring_println(stdout, b))
+    {
+      ++fail;
+      fprintf(stderr, "FAIL: Could not print zero length bitstring.\n");
+    }
+
+  /* Test printing a way too long bitstring */
+  b = bitstring_empty();
+  b->length = 2 * MAX_BITSTRING;
+  if (bitstring_println(stdout, b))
+    {
+      ++fail;
+      fprintf(stderr, "FAIL: Could print too long bitstring.\n");
     }
 
   return fail;
