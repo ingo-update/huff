@@ -11,14 +11,17 @@
 
 void _print_usage(char *name)
 {
-  fprintf(stderr, "Usage:\n%s [-b, -h] <filename>\n", name);
+  fprintf(stderr, "Usage:\n%s [-b, -s, -h] <filename>\n", name);
+  fprintf(stderr, "  -b\tPrint bitstrings to stdout.\n");
+  fprintf(stderr, "  -s\tPrint histogram to stdout.\n");
+  fprintf(stderr, "  -h\tPrint this text and exit.\n");
 }
 
 int main(int argc, char **argv)
 {
   FILE *infile, *outfile;
   char *filename;
-  int print_bit_strings;
+  int print_bit_strings, print_histogram;
   int hist[256];
   int i;
   char outname[100];
@@ -40,6 +43,21 @@ int main(int argc, char **argv)
 	else
 	  {
 	    print_bit_strings = 1;
+	    print_histogram = 0;
+	    filename = argv[2];
+	  }
+      }
+    else if (argv[1][1] == 's') /* Print histogram to stdout */
+      {
+	if (argc != 3) /* Filename required */
+	  {
+	    _print_usage(argv[0]);
+	    exit(EXIT_FAILURE);
+	  }
+	else
+	  {
+	    print_bit_strings = 0;
+	    print_histogram = 1;
 	    filename = argv[2];
 	  }
       }
@@ -50,7 +68,7 @@ int main(int argc, char **argv)
       }
   else if (argc == 2)
     {
-      print_bit_strings = 0;
+      print_bit_strings = print_histogram = 0;
       filename = argv[1];
     }
   else
@@ -97,6 +115,9 @@ int main(int argc, char **argv)
 
   /* Output the histogram. */
   hist_store(outfile, hist);
+
+  /* Print the histogram to stdout if requested. */
+  if (print_histogram) hist_print(hist, stdout);
 
   /* Compress infile to outfile. */
   encode(infile, outfile, hist, print_bit_strings);

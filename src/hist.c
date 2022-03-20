@@ -86,3 +86,36 @@ void hist_load(FILE *s, int *hist)
 
   return;
 }
+
+int _between(unsigned char a, unsigned char b, unsigned char c)
+{
+  return (a>=b) && (a<=c);
+}
+
+int _in(unsigned char x, char *s)
+{
+  int i;
+
+  for (i = 0; s[i] ; ++i) if (x == s[i]) return 1;
+
+  return 0;
+}
+
+unsigned int _filter(unsigned int c)
+{
+  if (_between(c, '0', '9') ||
+      _between(c, 'a', 'z') ||
+      _between(c, 'A', 'Z') ||
+      _in(c, "åäöÅÄÖ")) return c;
+
+  return ' ';
+}
+
+void hist_print(int *hist, FILE *os)
+{
+  unsigned int c;
+
+  for (c = 0 ; c < 256 ; ++c) fprintf(os, "0x%x (%c): %d\n", c, _filter(c), hist[c]);
+
+  return;
+}
